@@ -3,26 +3,28 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+Ruby 2.2 is the version used. 
 
-* Ruby version
+Have used the MYSQL SERVER for the Database 
 
-* System dependencies
+Steps of Running the App.
 
-* Configuration
+* After cloning the application, change the database adapter and Gem as per your convinience, do Bundle install
 
-* Database creation
+* Then Set up the DB with below commands.
 
-* Database initialization
+	$ rake db:create (if you have not created the DB for the same name).
 
-* How to run the test suite
+	$ rake db:migrate (for setting up the Tables)
 
-* Services (job queues, cache servers, search engines, etc.)
+	$ rake db:seed (for storing the Predefined Data) 
 
-* Deployment instructions
+* Then Enter the Below command
 
-* ...
+	$ rails s
 
+* Now Server is running in http://localhost:8000
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Do the Below command for available routes
+
+	$ rake routes
