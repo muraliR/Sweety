@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sweety</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<% if current_user %>
+		<div style="float:right;">
+			Welcome <%= current_user.user_type %> : <b> <%= current_user.name %> </b>
+			<%= link_to "Logout", destroy_user_session_path, method: :delete %>
+		</div>
+	<% end %>
+	<div class="container-fluid">
+		<%= yield %>
+	</div>
+
+	<style type="text/css">
+		.error {
+			background-color: red;
+		}
+	</style>
+</body>
+</html>

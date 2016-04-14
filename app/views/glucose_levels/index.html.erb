@@ -1,0 +1,64 @@
+
+
+<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  	<div class="col-xs-12">
+
+		<% if flash[:error] %>
+		    <div class="error">
+		    	<%= flash[:error] %>
+		    </div>
+		<% end %>
+
+		<div class="row">
+  			<div class="col-xs-6">
+  				<%= form_tag(glucose_levels_path, :method=>'get', :class => "form-inline") do %>
+					<div class="form-group">
+						<input type="text" class="form-control" id="daterangepicker" title="Select the Date Range!!" placeholder="Select the Date Range!!" value="<%= dateRangeValue(@start_date,@end_date) %>">
+						<input type="hidden" name="search[start_date]" id="start_date" value="<%= @start_date %>" readonly="1" form-control="form-control">
+						<input type="hidden" name="search[end_date]" id="end_date" value="<%= @end_date %>" readonly="1" form-control="form-control">
+					</div> 
+					<button type="submit" class="btn btn-default">Get Report</button>
+				<% end %>
+			</div>
+			<div class="col-xs-6">
+				<% if current_user.patient?  %>
+					<%= link_to "Create New", new_glucose_level_path, :class => "btn btn-primary btn-lg active", 'style' => 'float:right;'  %>
+				<% end %>
+			</div>
+		</div>
+
+		<div class="row">
+  			<div class="col-xs-12">
+
+				<table class="table">
+					<caption>List of Glucose Levels</caption>
+					<thead>
+						<tr>
+							<% if current_user.doctor?  %>
+								<th scope="row">Name</th>	
+							<% end %>
+							<th scope="row">Glucose Level</th>
+							<th scope="row">Created At</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @glucose_levels.each do |gl| %>
+							<tr>
+								<% if current_user.doctor?  %>
+									<td> <%= gl.patient.name %> </td>
+								<% end %>
+								<td>
+									<%= gl.glucose_level %>
+								</td>
+								<td>
+									<%= gl.created_at.strftime("%b %e, %l:%M %p") %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

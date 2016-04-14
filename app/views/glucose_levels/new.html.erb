@@ -1,0 +1,19 @@
+<% if @limit_reached %>
+	You Have Reachhed the Daily Limit
+
+<% else %>
+
+
+	<% if flash[:error] %>
+	    <div class="error"><%= flash[:error] %></div>
+	<% end %>
+
+	<%= form_for @glucose_level do |f| %>
+	  <%= f.label :glucose_level %>:
+	  <%= f.number_field :glucose_level %>  mg/dl <br />
+	  <%= f.submit %>
+	<% end %>
+<% end %>
+
+
+<%= link_to "Back to the List", glucose_levels_path  %>
