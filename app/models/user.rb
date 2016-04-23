@@ -44,7 +44,7 @@ class Patient < User
 
     def can_create_glucose_level?
     	#method to validate whether patient can create a new Glucose Level For that day
-    	self.glucose_levels.where("created_at >= ?", Time.zone.now.beginning_of_day).count < GlucoseLevel::DAILYLIMIT
+    	self.glucose_levels.where("created_at >= ?", Time.zone.now.beginning_of_day).count < GlucoseLevel.daily_limit
 	end
 
 end 
