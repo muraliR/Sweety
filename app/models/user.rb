@@ -22,14 +22,16 @@ class User < ActiveRecord::Base
     	user_type == "Doctor"
     end
 
-    def index_data(params=[])
-    	#returns if the User Type is Empty
-    	#SO Raise the Error
-    end
+    # def index_data(params=[])
+    # 	#returns if the User Type is Empty
+    # 	#SO Raise the Error
+    # end
 end
 
 
 class Patient < User
+
+	#scope :gls, -> (id) { joins(:glucose_levels).where('glucose_levels.patient_id = ?', id) }
 
 	has_many :glucose_levels	
 
