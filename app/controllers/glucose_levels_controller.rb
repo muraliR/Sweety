@@ -46,20 +46,6 @@ class GlucoseLevelsController < ApplicationController
 		end
 	end
 
-	# def set_date_params
-	# 	#set the date params that can be accesed to view
-	# 	@start_date = @end_date = Time.now.strftime('%Y-%m-%d')
-	# 	if params["search"].present?
-	# 		if validDate(params["search"]["start_date"]) && validDate(params["search"]["end_date"])
-	# 			@start_date = params['search']['start_date']
-	# 			@end_date = params['search']['end_date']
-	# 		else
-	# 			flash[:error] = "Invalid Date!!"
-	# 			redirect_to glucose_levels_path
-	# 		end
-	# 	end
-	# end
-
 	def filter_and_validate_params
 		@start_date = @end_date = Time.now.strftime('%Y-%m-%d')
 		if params[:search].present?

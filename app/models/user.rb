@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
     	%w(Patient Doctor) #For Single Table Inheritance Types
 	end
 
-    #USER_TYPES = %w(Patient Doctor) #For Single Table Inheritance Types
-
   	validates :user_type, :inclusion => {:in => User.user_types, :message => 'Please Specify you are a Doctor or Patient'}
 
     #implementing the single table inheritance
@@ -57,9 +55,4 @@ class Doctor < User
 		#CurrentlyFetching all patients glucose levels
     	GlucoseLevel.all
     end
-
-	# def glucose_levels
-	# 	#for Doctors Get all the Glucose Levels
-	# 	GlucoseLevel.all
-	# end
 end 
