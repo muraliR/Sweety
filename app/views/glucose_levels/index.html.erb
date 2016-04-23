@@ -33,6 +33,10 @@
 
 				<table class="table">
 					<caption>List of Glucose Levels</caption>
+					<ul>
+						<li>Maximum Reading : <%= @max_reading %></li>
+						<li>Minimum Reading :<%= @min_reading %></li>
+						<li>Average Reading :<%= @avg_reading %></li>
 					<thead>
 						<tr>
 							<% if current_user.doctor?  %>

@@ -1,15 +1,17 @@
 class User < ActiveRecord::Base
 
-	include Tool #include Tool Module for Helper Methods
-
   	# Include default devise modules. Others available are:
   	# :confirmable, :lockable, :timeoutable and :omniauthable
   	devise :database_authenticatable, :registerable, :validatable,
          :recoverable, :rememberable, :trackable 
 
-    USER_TYPES = %w(Patient Doctor) #For Single Table Inheritance Types
+    def self.user_types
+    	%w(Patient Doctor) #For Single Table Inheritance Types
+	end
 
-  	validates :user_type, :inclusion => {:in => USER_TYPES, :message => 'Please Specify you are a Doctor or Patient'}
+    #USER_TYPES = %w(Patient Doctor) #For Single Table Inheritance Types
+
+  	validates :user_type, :inclusion => {:in => User.user_types, :message => 'Please Specify you are a Doctor or Patient'}
 
     #implementing the single table inheritance
     self.inheritance_column = :user_type 
@@ -31,25 +33,13 @@ end
 
 class Patient < User
 
-	has_many :glucose_levels
+	has_many :glucose_levels	
 
 	def index_data(params=[])
 		glucose_levels_data = glucose_levels
 		#check any search params is coming from request
-		unless params["search"].nil?
-			search_params = params["search"]
-
-			#first search for dates
-			#check id date params coming from request
-			#if date params coming from request, validate the start date and end date
-			if validDate(search_params["start_date"]) && validDate(search_params["end_date"])
-				start_date = search_params["start_date"]
-	    		end_date = search_params["end_date"]
-	    		glucose_levels_data = glucose_levels_data.where('DATE(created_at) BETWEEN ? AND ?', start_date, end_date)	
-			end
-
-			#### any other search goes here
-
+		if params.present?
+	    	glucose_levels_data = glucose_levels.date_filter(params["start_date"],params["end_date"])
 		end
 		glucose_levels_data
     end
@@ -65,11 +55,11 @@ class Doctor < User
 
 	def index_data(params=[])
 		#CurrentlyFetching all patients glucose levels
-    	self.glucose_levels
+    	GlucoseLevel.all
     end
 
-	def glucose_levels
-		#for Doctors Get all the Glucose Levels
-		GlucoseLevel.all
-	end
+	# def glucose_levels
+	# 	#for Doctors Get all the Glucose Levels
+	# 	GlucoseLevel.all
+	# end
 end 
